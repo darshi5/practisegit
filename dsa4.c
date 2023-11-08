@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    struct Node *prev; // Doubly Circular Linked List
+    int data;
+    struct Node *next;
+} *head = NULL;
+
+void create(int n)
+{
+    int i, num;
+    struct Node *t, *last;
+    head = (struct Node *)malloc(sizeof(struct Node));
+    printf("Enter the 1st node: ");
+    scanf("%d", &num);
+    head->prev = NULL;
+    head->data = num;
+    head->next = NULL;
+    last = head;
+
+    for (int i = 2; i <= n; i++)
+    {
+        int j;
+        t = (struct Node *)malloc(sizeof(struct Node));
+        printf("Enter the %d node: ", i);
+        scanf("%d", &j);
+        t->prev = last;
+        t->data = j;
+        t->next = NULL;
+        last->next = t;
+        last = t;
+    }
+    head->prev = last;
+    last->next = head;
+}
+
+void Display(struct Node *p)
+{
+    do
+    {
+        printf("%d", p->data);
+        printf("->");
+        p = p->next;
+    } while (p != head);
+}
+
+int main()
+{
+    int k;
+    printf("Enter no. of nodes: ");
+    scanf("%d", &k);
+    create(k);
+    printf("\n");
+    Display(head);
+
+    return 0;
+}
